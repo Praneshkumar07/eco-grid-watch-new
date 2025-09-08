@@ -5,18 +5,30 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { EnergyCard } from '@/components/EnergyCard';
 import { CircularGauge } from '@/components/CircularGauge';
 import { WeatherWidget } from '@/components/WeatherWidget';
-import { currentEnergyData } from '@/data/mockData';
+import { currentEnergyData, getEnergyDataBySource } from '@/data/mockData';
+import { useToast } from '@/hooks/use-toast';
 
 type EnergySource = 'solar' | 'wind' | 'grid';
 
 export default function Monitoring() {
   const [activeSource, setActiveSource] = useState<EnergySource>('solar');
+  const { toast } = useToast();
   
   const sourceButtons = [
     { key: 'solar' as const, label: 'Solar', icon: Sun },
     { key: 'wind' as const, label: 'Wind', icon: Wind },
     { key: 'grid' as const, label: 'Grid', icon: Zap },
   ];
+
+  // Get energy data based on active source
+  const energyData = getEnergyDataBySource(activeSource);
+
+  const handleScheduleCleaning = () => {
+    toast({
+      title: "Cleaning Scheduled",
+      description: "Panel cleaning has been scheduled for tomorrow at 8:00 AM.",
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20">
@@ -29,9 +41,9 @@ export default function Monitoring() {
 
         {/* Weather Widget */}
         <WeatherWidget
-          temperature={currentEnergyData.temperature}
-          condition={currentEnergyData.weatherCondition}
-          sunlightHours={currentEnergyData.sunlightHours}
+          temperature={energyData.temperature}
+          condition={energyData.weatherCondition}
+          sunlightHours={energyData.sunlightHours}
         />
 
         {/* Source Toggle */}
@@ -53,7 +65,7 @@ export default function Monitoring() {
         <div className="grid grid-cols-2 gap-4">
           <EnergyCard
             title="Generated"
-            value={currentEnergyData.generation}
+            value={energyData.generation}
             unit="kWh"
             icon={Zap}
             variant="solar"
@@ -62,16 +74,16 @@ export default function Monitoring() {
           
           <EnergyCard
             title="Stored Energy"
-            value={currentEnergyData.storage}
+            value={energyData.storage}
             unit="kWh"
             icon={Battery}
             variant="storage"
-            progress={currentEnergyData.batteryPercentage}
+            progress={energyData.batteryPercentage}
           />
           
           <EnergyCard
             title="Consumption"
-            value={currentEnergyData.consumption}
+            value={energyData.consumption}
             unit="kWh"
             icon={Home}
             variant="consumption"
@@ -80,7 +92,7 @@ export default function Monitoring() {
           
           <EnergyCard
             title="Exported"
-            value={currentEnergyData.exported}
+            value={energyData.exported}
             unit="kWh"
             icon={TrendingUp}
             variant="wind"
@@ -97,7 +109,7 @@ export default function Monitoring() {
             <div className="grid grid-cols-2 gap-6">
               <div className="flex flex-col items-center space-y-2">
                 <CircularGauge
-                  value={currentEnergyData.irradiation}
+                  value={energyData.irradiation}
                   label="Irradiation"
                   color="solar"
                   size="md"
@@ -106,8 +118,8 @@ export default function Monitoring() {
               
               <div className="flex flex-col items-center space-y-2">
                 <CircularGauge
-                  value={activeSource === 'solar' ? currentEnergyData.solarHealth : currentEnergyData.windHealth}
-                  label={`${activeSource === 'solar' ? 'Solar' : 'Wind'} Health`}
+                  value={activeSource === 'solar' ? energyData.solarHealth : energyData.windHealth}
+                  label={`${activeSource === 'solar' ? 'Solar' : activeSource === 'wind' ? 'Wind' : 'Grid'} Health`}
                   color={activeSource === 'solar' ? 'solar' : 'wind'}
                   size="md"
                 />
@@ -139,7 +151,7 @@ export default function Monitoring() {
                   <AlertTriangle className="h-4 w-4 text-warning" />
                   <span className="font-medium">Panel Cleaning Due</span>
                 </div>
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" onClick={handleScheduleCleaning}>
                   Schedule
                 </Button>
               </div>

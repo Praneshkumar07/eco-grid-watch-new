@@ -76,28 +76,56 @@ export const generateChartData = (period: 'day' | 'week' | 'month' | 'year'): Ch
   const baseData = [];
   let points = 24;
   let timeUnit = 'hour';
+  let generationBase = 12;
+  let consumptionBase = 8;
+  let storageBase = 15;
   
   switch (period) {
     case 'week':
       points = 7;
       timeUnit = 'day';
+      generationBase = 180; // Weekly totals
+      consumptionBase = 120;
+      storageBase = 200;
       break;
     case 'month':
       points = 30;
       timeUnit = 'day';
+      generationBase = 25; // Daily averages for month
+      consumptionBase = 18;
+      storageBase = 35;
       break;
     case 'year':
       points = 12;
       timeUnit = 'month';
+      generationBase = 750; // Monthly totals for year
+      consumptionBase = 540;
+      storageBase = 950;
       break;
   }
 
   for (let i = 0; i < points; i++) {
+    // Add seasonal variation for yearly data
+    let seasonalMultiplier = 1;
+    if (period === 'year') {
+      // Higher generation in summer months (April-September in India)
+      seasonalMultiplier = (i >= 3 && i <= 8) ? 1.3 + (Math.sin((i - 3) * Math.PI / 6) * 0.4) : 0.7 + (Math.random() * 0.3);
+    }
+    
+    // Add weekly pattern for daily data
+    let weekdayMultiplier = 1;
+    if (period === 'day') {
+      // Peak hours pattern for solar generation
+      weekdayMultiplier = i >= 6 && i <= 18 ? 1.2 + (Math.sin((i - 6) * Math.PI / 12) * 0.8) : 0.1 + (Math.random() * 0.2);
+    }
+    
+    const multiplier = seasonalMultiplier * weekdayMultiplier;
+    
     baseData.push({
       time: `${i + 1}${timeUnit === 'hour' ? ':00' : timeUnit === 'day' ? ' Day' : ' Month'}`,
-      generation: Math.random() * 15 + 5,
-      consumption: Math.random() * 10 + 3,
-      storage: Math.random() * 20 + 10,
+      generation: Math.max(0, (Math.random() * generationBase + generationBase * 0.5) * multiplier),
+      consumption: Math.max(1, Math.random() * consumptionBase + consumptionBase * 0.7),
+      storage: Math.max(5, Math.random() * storageBase + storageBase * 0.6),
     });
   }
   
@@ -117,7 +145,62 @@ export const mockUserSettings = {
 
 // Mock weather location
 export const mockLocation = {
-  city: 'San Francisco',
-  region: 'CA',
-  country: 'USA'
+  city: 'Ramapur',
+  region: 'Odisha',
+  country: 'India'
+};
+
+// Mock energy data for different sources
+export const getEnergyDataBySource = (source: 'solar' | 'wind' | 'grid') => {
+  const baseData = { ...currentEnergyData };
+  
+  switch (source) {
+    case 'solar':
+      return {
+        ...baseData,
+        generation: 15.2,
+        storage: 22.8,
+        consumption: 9.1,
+        exported: 6.1,
+        batteryPercentage: 85,
+        solarHealth: 94,
+        windHealth: 0,
+        irradiation: 92,
+        temperature: 32,
+        weatherCondition: 'Sunny',
+        sunlightHours: 9.8,
+      };
+    case 'wind':
+      return {
+        ...baseData,
+        generation: 8.4,
+        storage: 14.2,
+        consumption: 7.8,
+        exported: 0.6,
+        batteryPercentage: 58,
+        solarHealth: 0,
+        windHealth: 88,
+        irradiation: 45,
+        temperature: 28,
+        weatherCondition: 'Cloudy',
+        sunlightHours: 3.2,
+      };
+    case 'grid':
+      return {
+        ...baseData,
+        generation: 0,
+        storage: 8.5,
+        consumption: 12.4,
+        exported: 0,
+        batteryPercentage: 32,
+        solarHealth: 0,
+        windHealth: 0,
+        irradiation: 15,
+        temperature: 26,
+        weatherCondition: 'Rainy',
+        sunlightHours: 1.5,
+      };
+    default:
+      return baseData;
+  }
 };
