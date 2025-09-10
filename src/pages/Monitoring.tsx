@@ -1,27 +1,17 @@
-import { useState } from 'react';
-import { Sun, Wind, Zap, Battery, Home, TrendingUp, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Zap, Battery, Home, CheckCircle, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { EnergyCard } from '@/components/EnergyCard';
 import { CircularGauge } from '@/components/CircularGauge';
 import { WeatherWidget } from '@/components/WeatherWidget';
-import { currentEnergyData, getEnergyDataBySource } from '@/data/mockData';
+import { getEnergyDataBySource } from '@/data/mockData';
 import { useToast } from '@/hooks/use-toast';
 
-type EnergySource = 'solar' | 'wind' | 'grid';
-
 export default function Monitoring() {
-  const [activeSource, setActiveSource] = useState<EnergySource>('solar');
   const { toast } = useToast();
-  
-  const sourceButtons = [
-    { key: 'solar' as const, label: 'Solar', icon: Sun },
-    { key: 'wind' as const, label: 'Wind', icon: Wind },
-    { key: 'grid' as const, label: 'Grid', icon: Zap },
-  ];
 
-  // Get energy data based on active source
-  const energyData = getEnergyDataBySource(activeSource);
+  // Get solar energy data
+  const energyData = getEnergyDataBySource('solar');
 
   const handleScheduleCleaning = () => {
     toast({
@@ -45,21 +35,6 @@ export default function Monitoring() {
           condition={energyData.weatherCondition}
           sunlightHours={energyData.sunlightHours}
         />
-
-        {/* Source Toggle */}
-        <div className="flex gap-2 p-1 bg-muted rounded-lg">
-          {sourceButtons.map(({ key, label, icon: Icon }) => (
-            <Button
-              key={key}
-              variant={activeSource === key ? "default" : "ghost"}
-              className="flex-1 gap-2"
-              onClick={() => setActiveSource(key)}
-            >
-              <Icon className="h-4 w-4" />
-              {label}
-            </Button>
-          ))}
-        </div>
 
         {/* Energy Cards */}
         <div className="grid grid-cols-2 gap-4">
@@ -89,15 +64,6 @@ export default function Monitoring() {
             variant="consumption"
             trend={{ value: -5, isPositive: false }}
           />
-          
-          <EnergyCard
-            title="Exported"
-            value={energyData.exported}
-            unit="kWh"
-            icon={TrendingUp}
-            variant="wind"
-            trend={{ value: 8, isPositive: true }}
-          />
         </div>
 
         {/* Progress Indicators */}
@@ -106,21 +72,12 @@ export default function Monitoring() {
             <CardTitle>System Performance</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 gap-6">
+            <div className="flex justify-center">
               <div className="flex flex-col items-center space-y-2">
                 <CircularGauge
                   value={energyData.irradiation}
                   label="Irradiation"
                   color="solar"
-                  size="md"
-                />
-              </div>
-              
-              <div className="flex flex-col items-center space-y-2">
-                <CircularGauge
-                  value={activeSource === 'solar' ? energyData.solarHealth : energyData.windHealth}
-                  label={`${activeSource === 'solar' ? 'Solar' : activeSource === 'wind' ? 'Wind' : 'Grid'} Health`}
-                  color={activeSource === 'solar' ? 'solar' : 'wind'}
                   size="md"
                 />
               </div>
