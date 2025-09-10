@@ -34,39 +34,37 @@ export default function Index() {
         </div>
       </div>
 
-      <div className="px-6 py-6 space-y-6">
+      <div className="px-6 py-8 space-y-8 animate-in fade-in-50 duration-700">
         {/* Daily Summary Card */}
-        <Card className="bg-gradient-primary text-primary-foreground shadow-energy">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Zap className="h-5 w-5" />
-              Today's Energy Generated
+        <Card className="bg-gradient-primary text-primary-foreground shadow-energy border-0 overflow-hidden relative animate-in slide-in-from-top-4 duration-500">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
+          <CardHeader className="relative z-10">
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Zap className="h-6 w-6" />
+              Today's Solar Generation
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold mb-2">
+          <CardContent className="relative z-10">
+            <div className="text-4xl font-bold mb-3 bg-gradient-to-r from-white to-white/80 bg-clip-text">
               {currentEnergyData.generation} kWh
             </div>
-            <div className="flex items-center text-primary-foreground/90">
-              <TrendingUp className="h-4 w-4 mr-1" />
-              <span className="text-sm">+12% vs yesterday</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center text-primary-foreground/90">
+                <TrendingUp className="h-4 w-4 mr-1" />
+                <span className="text-sm">+12% vs yesterday</span>
+              </div>
+              <div className="text-sm text-primary-foreground/80">
+                Peak: 2.8 kW
+              </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 animate-in slide-in-from-bottom-4 duration-700 delay-200">
           <EnergyCard
-            title="Generation"
-            value={currentEnergyData.generation}
-            unit="kWh"
-            icon={Zap}
-            variant="solar"
-            trend={{ value: 12, isPositive: true }}
-          />
-          
-          <EnergyCard
-            title="Storage"
+            title="Battery"
             value={currentEnergyData.storage}
             unit="kWh"
             icon={Battery}
@@ -82,24 +80,29 @@ export default function Index() {
             variant="consumption"
             trend={{ value: -8, isPositive: false }}
           />
-          
         </div>
 
         {/* Quick Actions */}
-        <div className="space-y-3">
-          <h2 className="text-lg font-semibold">Quick Actions</h2>
-          <div className="grid grid-cols-1 gap-3">
+        <div className="space-y-4 animate-in slide-in-from-bottom-4 duration-700 delay-300">
+          <h2 className="text-xl font-semibold">Quick Actions</h2>
+          <div className="grid grid-cols-1 gap-4">
             <Link to="/monitoring">
-              <Button variant="outline" className="w-full justify-start h-12">
-                <Zap className="mr-3 h-5 w-5" />
-                Monitor Solar
+              <Button variant="outline" className="w-full justify-start h-14 group hover:bg-energy-solar/10 hover:border-energy-solar/30 transition-all duration-300">
+                <Zap className="mr-3 h-5 w-5 group-hover:text-energy-solar transition-colors" />
+                <div className="text-left">
+                  <div className="font-medium">Monitor Solar System</div>
+                  <div className="text-sm text-muted-foreground">Real-time performance data</div>
+                </div>
               </Button>
             </Link>
             
             <Link to="/statistics">
-              <Button variant="outline" className="w-full justify-start h-12">
-                <TrendingUp className="mr-3 h-5 w-5" />
-                View Statistics
+              <Button variant="outline" className="w-full justify-start h-14 group hover:bg-primary/5 hover:border-primary/30 transition-all duration-300">
+                <TrendingUp className="mr-3 h-5 w-5 group-hover:text-primary transition-colors" />
+                <div className="text-left">
+                  <div className="font-medium">View Analytics</div>
+                  <div className="text-sm text-muted-foreground">Historical data & trends</div>
+                </div>
               </Button>
             </Link>
           </div>

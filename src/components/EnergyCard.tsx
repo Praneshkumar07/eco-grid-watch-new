@@ -42,16 +42,21 @@ export function EnergyCard({
   variant = 'default'
 }: EnergyCardProps) {
   return (
-    <Card className={cn('shadow-card hover:shadow-energy transition-all duration-300', variantStyles[variant], className)}>
-      <CardHeader className="pb-3">
+    <Card className={cn(
+      'shadow-card hover:shadow-energy transition-all duration-500 hover:scale-[1.02] border-0 overflow-hidden relative group', 
+      variantStyles[variant], 
+      className
+    )}>
+      <div className="absolute top-0 right-0 w-20 h-20 bg-white/5 rounded-full -translate-y-10 translate-x-10 group-hover:scale-125 transition-transform duration-500"></div>
+      <CardHeader className="pb-3 relative z-10">
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm font-medium text-muted-foreground">
             {title}
           </CardTitle>
-          <Icon className={cn('h-5 w-5', iconStyles[variant])} />
+          <Icon className={cn('h-5 w-5 transition-all duration-300 group-hover:scale-110', iconStyles[variant])} />
         </div>
       </CardHeader>
-      <CardContent className="pt-0">
+      <CardContent className="pt-0 relative z-10">
         <div className="space-y-3">
           <div className="flex items-baseline space-x-1">
             <span className="text-2xl font-bold">
@@ -63,7 +68,7 @@ export function EnergyCard({
           </div>
           
           {progress !== undefined && (
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Progress value={progress} className="h-2" />
               <p className="text-xs text-muted-foreground">
                 {progress}% capacity
@@ -75,13 +80,13 @@ export function EnergyCard({
             <div className="flex items-center text-xs">
               <span
                 className={cn(
-                  'font-medium',
-                  trend.isPositive ? 'text-success' : 'text-danger'
+                  'font-medium px-2 py-1 rounded-full text-xs',
+                  trend.isPositive ? 'text-success bg-success/10' : 'text-danger bg-danger/10'
                 )}
               >
                 {trend.isPositive ? '+' : ''}{trend.value}%
               </span>
-              <span className="ml-1 text-muted-foreground">vs yesterday</span>
+              <span className="ml-2 text-muted-foreground">vs yesterday</span>
             </div>
           )}
         </div>
