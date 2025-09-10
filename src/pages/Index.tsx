@@ -83,14 +83,6 @@ export default function Index() {
             trend={{ value: -8, isPositive: false }}
           />
           
-          <EnergyCard
-            title="Exported"
-            value={currentEnergyData.exported}
-            unit="kWh"
-            icon={TrendingUp}
-            variant="wind"
-            trend={{ value: 15, isPositive: true }}
-          />
         </div>
 
         {/* Quick Actions */}
@@ -100,7 +92,7 @@ export default function Index() {
             <Link to="/monitoring">
               <Button variant="outline" className="w-full justify-start h-12">
                 <Zap className="mr-3 h-5 w-5" />
-                Monitor Solar & Wind
+                Monitor Solar
               </Button>
             </Link>
             

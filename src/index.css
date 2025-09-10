@@ -42,7 +42,6 @@ All colors MUST be HSL.
 
     /* Custom energy theme colors */
     --energy-solar: 45 95% 55%;
-    --energy-wind: 200 80% 50%;
     --energy-storage: 270 60% 55%;
     --energy-consumption: 15 85% 55%;
 
@@ -113,7 +112,6 @@ All colors MUST be HSL.
     --danger-foreground: 210 15% 8%;
 
     --energy-solar: 45 95% 65%;
-    --energy-wind: 200 80% 60%;
     --energy-storage: 270 60% 65%;
     --energy-consumption: 15 85% 65%;
 

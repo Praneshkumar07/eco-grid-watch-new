@@ -2,10 +2,8 @@ export interface EnergyData {
   generation: number;
   storage: number;
   consumption: number;
-  exported: number;
   batteryPercentage: number;
   solarHealth: number;
-  windHealth: number;
   irradiation: number;
   temperature: number;
   weatherCondition: string;
@@ -33,10 +31,8 @@ export const currentEnergyData: EnergyData = {
   generation: 12.8,
   storage: 18.5,
   consumption: 8.2,
-  exported: 4.6,
   batteryPercentage: 78,
   solarHealth: 92,
-  windHealth: 85,
   irradiation: 85,
   temperature: 24,
   weatherCondition: 'Sunny',
@@ -150,57 +146,20 @@ export const mockLocation = {
   country: 'India'
 };
 
-// Mock energy data for different sources
-export const getEnergyDataBySource = (source: 'solar' | 'wind' | 'grid') => {
+// Mock energy data for solar
+export const getEnergyDataBySource = (source: 'solar') => {
   const baseData = { ...currentEnergyData };
   
-  switch (source) {
-    case 'solar':
-      return {
-        ...baseData,
-        generation: 15.2,
-        storage: 22.8,
-        consumption: 9.1,
-        exported: 6.1,
-        batteryPercentage: 85,
-        solarHealth: 94,
-        windHealth: 0,
-        irradiation: 92,
-        temperature: 32,
-        weatherCondition: 'Sunny',
-        sunlightHours: 9.8,
-      };
-    case 'wind':
-      return {
-        ...baseData,
-        generation: 8.4,
-        storage: 14.2,
-        consumption: 7.8,
-        exported: 0.6,
-        batteryPercentage: 58,
-        solarHealth: 0,
-        windHealth: 88,
-        irradiation: 45,
-        temperature: 28,
-        weatherCondition: 'Cloudy',
-        sunlightHours: 3.2,
-      };
-    case 'grid':
-      return {
-        ...baseData,
-        generation: 0,
-        storage: 8.5,
-        consumption: 12.4,
-        exported: 0,
-        batteryPercentage: 32,
-        solarHealth: 0,
-        windHealth: 0,
-        irradiation: 15,
-        temperature: 26,
-        weatherCondition: 'Rainy',
-        sunlightHours: 1.5,
-      };
-    default:
-      return baseData;
-  }
+  return {
+    ...baseData,
+    generation: 15.2,
+    storage: 22.8,
+    consumption: 9.1,
+    batteryPercentage: 85,
+    solarHealth: 94,
+    irradiation: 92,
+    temperature: 32,
+    weatherCondition: 'Sunny',
+    sunlightHours: 9.8,
+  };
 };

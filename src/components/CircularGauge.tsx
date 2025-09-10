@@ -5,7 +5,7 @@ interface CircularGaugeProps {
   max?: number;
   label: string;
   size?: 'sm' | 'md' | 'lg';
-  color?: 'primary' | 'success' | 'warning' | 'danger' | 'solar' | 'wind';
+  color?: 'primary' | 'success' | 'warning' | 'danger' | 'solar';
   className?: string;
 }
 
@@ -21,7 +21,6 @@ const colorStyles = {
   warning: 'text-warning',
   danger: 'text-danger',
   solar: 'text-energy-solar',
-  wind: 'text-energy-wind',
 };
 
 export function CircularGauge({

@@ -14,13 +14,12 @@ interface EnergyCardProps {
     isPositive: boolean;
   };
   className?: string;
-  variant?: 'default' | 'solar' | 'wind' | 'storage' | 'consumption';
+  variant?: 'default' | 'solar' | 'storage' | 'consumption';
 }
 
 const variantStyles = {
   default: 'bg-gradient-card',
   solar: 'bg-gradient-to-br from-energy-solar/10 to-energy-solar/5 border-energy-solar/20',
-  wind: 'bg-gradient-to-br from-energy-wind/10 to-energy-wind/5 border-energy-wind/20',
   storage: 'bg-gradient-to-br from-energy-storage/10 to-energy-storage/5 border-energy-storage/20',
   consumption: 'bg-gradient-to-br from-energy-consumption/10 to-energy-consumption/5 border-energy-consumption/20',
 };
@@ -28,7 +27,6 @@ const variantStyles = {
 const iconStyles = {
   default: 'text-primary',
   solar: 'text-energy-solar',
-  wind: 'text-energy-wind',
   storage: 'text-energy-storage',
   consumption: 'text-energy-consumption',
 };

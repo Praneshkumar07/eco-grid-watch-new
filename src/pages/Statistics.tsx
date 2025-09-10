@@ -59,7 +59,7 @@ export default function Statistics() {
             value={384}
             unit="kWh"
             icon={TrendingUp}
-            variant="wind"
+            variant="solar"
             trend={{ value: 8, isPositive: true }}
           />
           
@@ -168,26 +168,17 @@ export default function Statistics() {
           </CardContent>
         </Card>
 
-        {/* Solar vs Wind Comparison */}
+        {/* Solar Performance */}
         <Card className="shadow-card">
           <CardHeader>
-            <CardTitle>Energy Source Comparison</CardTitle>
+            <CardTitle>Solar Performance</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="text-center p-4 bg-gradient-to-br from-energy-solar/10 to-energy-solar/5 rounded-lg border border-energy-solar/20">
-                <Sun className="h-8 w-8 text-energy-solar mx-auto mb-2" />
-                <h3 className="font-semibold">Solar</h3>
-                <p className="text-2xl font-bold">68%</p>
-                <p className="text-sm text-muted-foreground">of total generation</p>
-              </div>
-              
-              <div className="text-center p-4 bg-gradient-to-br from-energy-wind/10 to-energy-wind/5 rounded-lg border border-energy-wind/20">
-                <TrendingUp className="h-8 w-8 text-energy-wind mx-auto mb-2" />
-                <h3 className="font-semibold">Wind</h3>
-                <p className="text-2xl font-bold">32%</p>
-                <p className="text-sm text-muted-foreground">of total generation</p>
-              </div>
+            <div className="text-center p-6 bg-gradient-to-br from-energy-solar/10 to-energy-solar/5 rounded-lg border border-energy-solar/20">
+              <Sun className="h-12 w-12 text-energy-solar mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Solar Generation</h3>
+              <p className="text-3xl font-bold text-energy-solar mb-2">100%</p>
+              <p className="text-muted-foreground">Clean renewable energy</p>
             </div>
           </CardContent>
         </Card>
