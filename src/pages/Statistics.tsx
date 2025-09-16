@@ -48,7 +48,7 @@ export default function Statistics() {
           <EnergyCard
             title="Today's Energy"
             value={12.8}
-            unit="kWh"
+            unit="Wh"
             icon={Zap}
             variant="solar"
             trend={{ value: 12, isPositive: true }}
@@ -57,7 +57,7 @@ export default function Statistics() {
           <EnergyCard
             title="This Month"
             value={384}
-            unit="kWh"
+            unit="Wh"
             icon={TrendingUp}
             variant="solar"
             trend={{ value: 8, isPositive: true }}
@@ -66,7 +66,7 @@ export default function Statistics() {
           <EnergyCard
             title="Lifetime Generated"
             value="4,256"
-            unit="kWh"
+            unit="Wh"
             icon={Sun}
             variant="default"
           />

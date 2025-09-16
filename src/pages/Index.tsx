@@ -61,7 +61,7 @@ export default function Index() {
           </CardHeader>
           <CardContent className="relative z-10">
             <div className="text-4xl font-bold mb-3 bg-gradient-to-r from-white to-white/80 bg-clip-text">
-              {energyData.generation} kWh
+              {energyData.generation} Wh
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center text-primary-foreground/90">
@@ -69,7 +69,7 @@ export default function Index() {
                 <span className="text-sm">+12% vs yesterday</span>
               </div>
               <div className="text-sm text-primary-foreground/80">
-                Peak: 2.8 kW
+                Peak: 2.8 Wh
               </div>
             </div>
           </CardContent>
@@ -80,7 +80,7 @@ export default function Index() {
           <EnergyCard
             title="Battery"
             value={energyData.storage}
-            unit="kWh"
+            unit="Wh"
             icon={Battery}
             variant="storage"
             progress={energyData.batteryPercentage}
@@ -89,7 +89,7 @@ export default function Index() {
           <EnergyCard
             title="Usage"
             value={Math.abs(energyData.generation-energyData.storage)}
-            unit="kWh"
+            unit="Wh"
             icon={Home}
             variant="consumption"
             trend={{ value: -8, isPositive: false }}
