@@ -57,8 +57,8 @@ export default function Monitoring() {
           />
           
           <EnergyCard
-            title="Consumption"
-            value={energyData.consumption}
+            title="Usage"
+            value={energyData.usage}
             unit="kWh"
             icon={Home}
             variant="consumption"

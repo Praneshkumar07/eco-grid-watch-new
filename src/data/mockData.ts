@@ -1,7 +1,7 @@
 export interface EnergyData {
   generation: number;
   storage: number;
-  consumption: number;
+  usage: number;
   batteryPercentage: number;
   solarHealth: number;
   irradiation: number;
@@ -22,7 +22,7 @@ export interface NotificationItem {
 export interface ChartDataPoint {
   time: string;
   generation: number;
-  consumption: number;
+  usage: number;
   storage: number;
 }
 
@@ -30,7 +30,7 @@ export interface ChartDataPoint {
 export const currentEnergyData: EnergyData = {
   generation: 13.8,
   storage: 18.5,
-  consumption: 8.2,
+  usage: 8.2,
   batteryPercentage: 78,
   solarHealth: 92,
   irradiation: 85,
@@ -73,7 +73,7 @@ export const generateChartData = (period: 'day' | 'week' | 'month' | 'year'): Ch
   let points = 24;
   let timeUnit = 'hour';
   let generationBase = 12;
-  let consumptionBase = 8;
+  let usageBase = 8;
   let storageBase = 15;
   
   switch (period) {
@@ -81,21 +81,21 @@ export const generateChartData = (period: 'day' | 'week' | 'month' | 'year'): Ch
       points = 7;
       timeUnit = 'day';
       generationBase = 180; // Weekly totals
-      consumptionBase = 120;
+      usageBase = 120;
       storageBase = 200;
       break;
     case 'month':
       points = 30;
       timeUnit = 'day';
       generationBase = 25; // Daily averages for month
-      consumptionBase = 18;
+      usageBase = 18;
       storageBase = 35;
       break;
     case 'year':
       points = 12;
       timeUnit = 'month';
       generationBase = 750; // Monthly totals for year
-      consumptionBase = 540;
+      usageBase = 540;
       storageBase = 950;
       break;
   }
@@ -120,7 +120,7 @@ export const generateChartData = (period: 'day' | 'week' | 'month' | 'year'): Ch
     baseData.push({
       time: `${i + 1}${timeUnit === 'hour' ? ':00' : timeUnit === 'day' ? ' Day' : ' Month'}`,
       generation: Math.max(0, (Math.random() * generationBase + generationBase * 0.5) * multiplier),
-      consumption: Math.max(1, Math.random() * consumptionBase + consumptionBase * 0.7),
+      usage: Math.max(1, Math.random() * usageBase + usageBase * 0.7),
       storage: Math.max(5, Math.random() * storageBase + storageBase * 0.6),
     });
   }
@@ -134,7 +134,7 @@ export const mockUserSettings = {
   role: 'Operator',
   lowStorageAlert: 20,
   minSolarHealth: 85,
-  maxConsumption: 15,
+  maxusage: 15,
   darkMode: false,
   language: 'English'
 };
@@ -154,7 +154,7 @@ export const getEnergyDataBySource = (source: 'solar') => {
     ...baseData,
     generation: 15.2,
     storage: 22.8,
-    consumption: 9.1,
+    usage: 9.1,
     batteryPercentage: 85,
     solarHealth: 94,
     irradiation: 92,
