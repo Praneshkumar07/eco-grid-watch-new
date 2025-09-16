@@ -2,11 +2,13 @@ import { Battery, Zap, Home, TrendingUp } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EnergyCard } from '@/components/EnergyCard';
-import { currentEnergyData, mockUserSettings } from '@/data/mockData';
+import { mockUserSettings } from '@/data/mockData';
 import { Link } from 'react-router-dom';
 import heroImage from '@/assets/microgrid-hero.jpg';
+import { useEnergyData } from '@/hooks/useEnergyData';
 
 export default function Index() {
+  const { energyData, loading, error } = useEnergyData();
   const currentHour = new Date().getHours();
   const greeting = currentHour < 12 ? 'Good morning' : currentHour < 18 ? 'Good afternoon' : 'Good evening';
   const currentDate = new Date().toLocaleDateString('en-US', { 
@@ -15,6 +17,18 @@ export default function Index() {
     month: 'long', 
     day: 'numeric' 
   });
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading data. Please try again later.</div>;
+  }
+
+  if (!energyData) {
+    return <div>No energy data available.</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20">
@@ -47,7 +61,7 @@ export default function Index() {
           </CardHeader>
           <CardContent className="relative z-10">
             <div className="text-4xl font-bold mb-3 bg-gradient-to-r from-white to-white/80 bg-clip-text">
-              {currentEnergyData.generation} kWh
+              {energyData.generation} kWh
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center text-primary-foreground/90">
@@ -65,16 +79,16 @@ export default function Index() {
         <div className="grid grid-cols-2 gap-4 animate-in slide-in-from-bottom-4 duration-700 delay-200">
           <EnergyCard
             title="Battery"
-            value={currentEnergyData.storage}
+            value={energyData.storage}
             unit="kWh"
             icon={Battery}
             variant="storage"
-            progress={currentEnergyData.batteryPercentage}
+            progress={energyData.batteryPercentage}
           />
           
           <EnergyCard
             title="Usage"
-            value={currentEnergyData.consumption}
+            value={energyData.consumption}
             unit="kWh"
             icon={Home}
             variant="consumption"

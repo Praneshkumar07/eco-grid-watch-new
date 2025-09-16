@@ -28,7 +28,7 @@ export interface ChartDataPoint {
 
 // Mock current energy data
 export const currentEnergyData: EnergyData = {
-  generation: 12.8,
+  generation: 13.8,
   storage: 18.5,
   consumption: 8.2,
   batteryPercentage: 78,
