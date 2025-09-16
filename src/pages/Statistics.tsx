@@ -118,7 +118,7 @@ export default function Statistics() {
                   />
                   <Line 
                     type="monotone" 
-                    dataKey="consumption" 
+                    dataKey="usage" 
                     stroke="hsl(var(--energy-consumption))" 
                     strokeWidth={3}
                     name="Consumption"

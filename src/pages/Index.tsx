@@ -88,7 +88,7 @@ export default function Index() {
           
           <EnergyCard
             title="Usage"
-            value={energyData.consumption}
+            value={Math.abs(energyData.generation-energyData.storage)}
             unit="kWh"
             icon={Home}
             variant="consumption"
